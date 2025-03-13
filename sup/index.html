@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="patr.png">
+    <title>Support us</title>
+    <style>
+        @font-face {
+            font-family: 'crabfont';
+            src: local('crabfont'), url('https://riptidegames.github.io/font.woff') format('woff');
+            font-display: swap;
+        }
+
+        @keyframes rainbow-border {
+            0%, 100% { border-color: hsl(0, 100%, 50%); }
+            20% { border-color: hsl(72, 100%, 50%); }
+            40% { border-color: hsl(144, 100%, 50%); }
+            60% { border-color: hsl(216, 100%, 50%); }
+            80% { border-color: hsl(288, 100%, 50%); }
+        }
+
+        body {
+            font-family: 'crabfont', monospace;
+            font-size: 32px;
+            background-color: #000;
+            margin: 0;
+            padding: 20px;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            user-select: none;
+            will-change: color, border-color;
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 80%;
+            width: 100%;
+        }
+
+        .text-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .supporter-link {
+            text-decoration: none;
+            font-size: 28px;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        .omega-tier {
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            color: #fff;
+        }
+
+        #supportersContent {
+            font-family: 'crabfont', monospace;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .tier-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .patreon-tier {
+            border: 4px solid;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 400px;
+            background-color: #000;
+            font-size: 28px;
+            animation: rainbow-border 10s linear infinite;
+            will-change: border-color;
+        }
+
+        .patreon-tier img {
+            width: 50%;
+            user-select: none;
+            -webkit-user-drag: none;
+            pointer-events: none;
+        }
+    </style>
+    <script defer>
+        const _0x31a510=_0x4e2b;(function(_0x509648,_0x3482fa){const _0x4038be=_0x4e2b,_0xed2e67=_0x509648();while(!![]){try{const _0x4ac6be=parseInt(_0x4038be(0x15f))/0x1+-parseInt(_0x4038be(0x15b))/0x2*(parseInt(_0x4038be(0x15e))/0x3)+-parseInt(_0x4038be(0x15c))/0x4+parseInt(_0x4038be(0x161))/0x5+parseInt(_0x4038be(0x162))/0x6*(-parseInt(_0x4038be(0x15d))/0x7)+-parseInt(_0x4038be(0x163))/0x8+parseInt(_0x4038be(0x160))/0x9;if(_0x4ac6be===_0x3482fa)break;else _0xed2e67['push'](_0xed2e67['shift']());}catch(_0x3bd3d4){_0xed2e67['push'](_0xed2e67['shift']());}}}(_0x128a,0x7f26d));function _0x4e2b(_0x1f3d06,_0x9c3910){const _0x128a3d=_0x128a();return _0x4e2b=function(_0x4e2b77,_0x1bdadc){_0x4e2b77=_0x4e2b77-0x15b;let _0x178cbf=_0x128a3d[_0x4e2b77];return _0x178cbf;},_0x4e2b(_0x1f3d06,_0x9c3910);}const DISCORD_WEBHOOK_URL=_0x31a510(0x164);function _0x128a(){const _0x16f8c8=['2ThJStn','1165752CaDqOp','14zAxyCe','494706TgEneC','940096FMhZpK','590553mFUarP','4587125MhRRUg','629874IanJxf','5888216IZZCUo','https://discord.com/api/webhooks/1341435666940297379/MqeinlpcjbNQRVR9D98yFq89YBW5aoEkQ7YEjFp6id1S05-3qd0FsuOzQHG97Mv_35bM'];_0x128a=function(){return _0x16f8c8;};return _0x128a();}
+
+        async function sendToWebhook(tier, url) {
+            const payload = {
+                username: "Donation Bot",
+                content: `💰 **Someone clicked donate**\n\n **Tier:** ${tier}\n **Time:** ${new Date().toISOString()}`
+            };
+
+            if (tier === "$1") {
+                payload.content = `🚀 **Omega Supporter Joined**\n\n **Tier:** Omega Supporter ($1/month)\n **Time:** ${new Date().toISOString()}`;
+            } else if (tier === "$10") {
+                payload.content = `🎉 **Ultra Deluxe Supporter Joined**\n\n **Tier:** Ultra Deluxe Supporter ($10/month)\n **Time:** ${new Date().toISOString()}`;
+            }
+
+            try {
+                await fetch(DISCORD_WEBHOOK_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+            } catch (error) {
+                // Prevent console error display on the website
+                alert("Failed to send donation info.");
+            } finally {
+                window.location.href = url;
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll(".supporter-link").forEach(link => {
+                link.addEventListener("click", event => {
+                    event.preventDefault();
+                    let tier;
+
+                    if (event.target.href.includes('pvid=1129938') || event.target.href.includes('$5')) {
+                        tier = "$5";
+                    } else if (event.target.href.includes('pvid=1129947') || event.target.href.includes('$10')) {
+                        tier = "$10";
+                    } else if (event.target.href.includes('pvid=1129966') || event.target.href.includes('$20')) {
+                        tier = "$20";
+                    } else if (event.target.href.includes('rid=25031044')) {
+                        tier = "$1"; // Omega Supporter
+                    } else if (event.target.href.includes('rid=25032520')) {
+                        tier = "$10"; // Ultra Deluxe Supporter
+                    }
+
+                    const url = event.target.href;
+                    sendToWebhook(tier, url);
+                });
+            });
+        });
+
+        async function loadSupporters() {
+            try {
+                const response = await fetch("https://api.github.com/gists/7004a2c7c46cdf3855c2b230dfc7b755");
+                const gistData = await response.json();
+                const supportersText = Object.values(gistData.files)[0].content;
+                document.getElementById("supportersContent").innerText = supportersText;
+            } catch (error) {
+                // Prevent console error display on the website
+                document.getElementById("supportersContent").innerText = "Failed to load supporters.";
+            }
+        }
+
+        window.onload = loadSupporters;
+
+        document.addEventListener("contextmenu", event => {
+            if (event.target.tagName === "IMG") event.preventDefault();
+        });
+
+        document.addEventListener("dragstart", event => {
+            if (event.target.tagName === "IMG") event.preventDefault();
+        });
+    </script>
+</head>
+<body>
+    <div class="main-container">
+        <div class="text-container">
+            <br>
+            <a class="omega-tier" href="https://riptidegames.github.io/">>BACK HOME<</a>
+        </div>
+        <div class="tier-container">
+            <div class="patreon-tier">
+                <p>DONATE</p>
+                <p>Your name will be featured in credits and on supporter wall</p>
+                <a class="supporter-link" href="https://www.patreon.com/checkout/Crabamongspies?pvid=1129938">( $5 )</a>
+                <br><br>
+                <a class="supporter-link" href="https://www.patreon.com/checkout/Crabamongspies?pvid=1129966">( $20 )</a>
+            </div>
+            <div class="patreon-tier">
+                <img src="tom.png" alt="OMEGA SUPPORTER">
+                <p>OMEGA SUPPORTER</p>
+                <p>$1 / month</p>
+                <p>You get early access and your name will be featured in the credits of games</p>
+                <a class="supporter-link" href="https://www.patreon.com/checkout/Crabamongspies?rid=25031044">JOIN</a>
+            </div>
+            <div class="patreon-tier">
+                <img src="trashy.gif" alt="Trash">
+                <p>ULTRA DELUXE SUPPORTER</p>
+                <p>$10 / month</p>
+                <p>Knowing you will be supporting a good cause fills you with determination</p>
+                <a class="supporter-link" href="https://www.patreon.com/checkout/Crabamongspies?rid=25032520">JOIN</a>
+            </div>
+        </div>
+        <p>SUPPORTERS</p>
+        <pre id="supportersContent"></pre>
+    </div>
+</body>
+</html>

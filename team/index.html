@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <title>Team</title>
+
+    <style>
+        @font-face {
+            font-family: 'crabfont';
+            src: url('https://riptidegames.github.io/font.woff') format('woff');
+            font-display: swap;
+        }
+
+        body {
+            font-family: 'crabfont', sans-serif; /* Fallback font */
+            font-size: 32px;
+            background-color: #000000;
+            margin: 0;
+            padding: 0;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            user-select: none; /* Prevent text selection */
+        }
+
+        .back-link {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+        }
+
+        .text-container {
+            display: inline-block;
+            margin: 0;
+            padding: 10px 0;
+        }
+
+        .team-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1px;
+            justify-content: center;
+            align-items: center;
+            max-width: 600px;
+        }
+
+        .team-member {
+            text-align: center;
+            margin-bottom: 5px; /* Reduced bottom margin */
+            pointer-events: none; /* Disable clickability */
+        }
+
+        .team-member img {
+            width: 100%;
+            max-width: 128px;
+            height: auto;
+            border-radius: 12.5%;
+            margin-bottom: 5px; /* Reduced space between image and text */
+        }
+
+        .team-member p {
+            margin: 0; /* Removed margin for tighter spacing */
+            padding: 0; /* Removed padding for tighter spacing */
+        }
+
+        .links-container {
+            margin-top: 10px;
+            text-decoration: none;
+        }
+
+        /* Custom Discord widget styling */
+        .discord-widget {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        @media (max-width: 500px) {
+            .team-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <a class="back-link" href="https://riptidegames.github.io/"> >Back Home< </a>
+
+    <div class="text-container">
+        <p>The amazing team behind Riptide Studios</p>
+    </div>
+    
+    <div class="team-container">
+        <div class="team-member">
+            <img src="crab.png" alt="Crabamongspies">
+            <p>Crabamongspies</p>
+            <p>(Lead Developer)</p>
+        </div>
+        <div class="team-member">
+            <img src="ddm.png" alt="Da_was_sad">
+            <p>Da_was_sad</p>
+            <p>(Code)</p>
+        </div>
+        <div class="team-member">
+            <img src="sb.png" alt="Sirblueberrous">
+            <p>Sirblueberrous</p>
+            <p>(Music)</p>
+        </div>
+        <div class="team-member">
+            <img src="wd.png" alt="Luke">
+            <p>Luke</p>
+            <p>(Characters)</p>
+        </div>
+    </div>
+
+    <p class="links-container">
+        <a href="https://riptidegames.github.io/sup/" style="color: white; text-decoration: none;"> >Support us< </a>
+    </p>
+
+    <script>
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.addEventListener('copy', event => event.preventDefault());
+    </script>
+</body>
+</html>
