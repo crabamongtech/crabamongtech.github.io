@@ -1,11 +1,11 @@
 @font-face {
-    font-family: 'crabfont';
+    font-family: 'Nasalization Regular';
     src: url('font.woff') format('woff');
     font-display: swap;
 }
 
 body {
-    font-family: 'crabfont';
+    font-family: 'Nasalization Regular';
     font-size: 32px; /* Doubled */
     background: #000;
     color: #fff;
