@@ -1,92 +1,120 @@
-@font-face {
-    font-family: 'Nasalization Regular';
-    src: url('font.woff') format('woff');
-    font-display: swap;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
 }
 
 body {
-    font-family: 'Nasalization Regular';
-    font-size: 32px; /* Doubled */
-    background: #000;
-    color: #fff;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: start; /* Align to top */
-    text-align: center;
-    user-select: none;
-    min-height: 100vh;
-    overflow: hidden;
-    position: relative;
+  font-family: 'Exo 2', sans-serif;
+  background: #3E4637;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  animation: fadeIn 0.75s ease-in;
+  padding: 1rem;
 }
 
-.text-container {
-    position: absolute;
-    top: 0; /* Exact top */
-    left: 50%; /* Middle */
-    transform: translateX(-50%); /* Center align */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0;
-    width: auto;
-    margin: 0;
+header, footer, section {
+  text-align: center;
+  padding: 1rem;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-.category, .text-container p, .text-container a {
-    margin: 0.2em 0; /* Doubled */
+header {
+  padding-top: 2rem;
 }
 
-.text-container a {
-    text-decoration: none;
-    transition: 0.2s;
+h1 {
+  font-size: 2.5rem;
+  color: #ff6700;
 }
 
-.tiny-text {
-    font-size: 24px; /* Doubled */
-    color: orange;
-    position: absolute;
-    top: 10px;
-    left: 10px;
+.tagline {
+  font-size: 1rem;
+  margin-top: 0.5rem;
 }
 
-.game-embed {
-    display: inline-block;
-    background: #3E4637;
-    padding: 0;
-    text-align: center;
-    margin: 0;
+nav {
+  background: #4C5844;
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  margin: 1.5rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
 }
 
-.game-embed img {
-    width: 100%;
-    max-width: 150px; /* Reverted to original */
-    display: block;
-    margin: 0;
-    padding: 0;
-    user-select: none;
-    pointer-events: none;
+nav a, a {
+  color: #ffd1a3;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: color 0.3s, transform 0.3s;
 }
 
-.game-embed a {
-    display: block;
-    background: #4C5844;
-    color: white;
-    padding: 8px 12px; /* Reverted to original */
-    font-size: 18px; /* Reverted to original */
-    margin-top: 0;
+nav a:hover {
+  color: #ffddbb;
+  transform: scale(1.05);
 }
 
-.links-container {
-    display: flex;
-    gap: 20px; /* Doubled */
-    justify-content: center;
-    flex-wrap: wrap;
+section {
+  padding: 0 1rem;
 }
 
-.game-link { color: yellow; }
-.art-link { color: orange; }
-.team-link { color: palevioletred; }
-.support-link { color: #F86754; }
-.archive { color: skyblue; }
+.card {
+  background: #4C5844;
+  border: 1px solid #ffffff33;
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.01);
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.8rem;
+}
+
+footer {
+  font-size: 0.85rem;
+  background: #4C5844;
+  margin-top: auto;
+  padding: 1rem 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  h1 { font-size: 2rem; }
+  .tagline { font-size: 0.9rem; }
+  nav { padding: 0.5rem; }
+  nav a { font-size: 0.9rem; }
+  .card { padding: 1rem; }
+  h2 { font-size: 1.2rem; }
+  footer { font-size: 0.75rem; }
+}
+
+@media (min-width: 600px) {
+  h1 { font-size: 3rem; }
+  .tagline { font-size: 1.2rem; }
+  nav a { font-size: 1.1rem; }
+  h2 { font-size: 1.8rem; }
+}

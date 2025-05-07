@@ -1,0 +1,89 @@
+body {
+  margin: 0;
+  background: linear-gradient(145deg, #0a0a0a, #1a1a1a);
+  color: #fff;
+  font-family: 'K2D', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow-y: auto;
+  flex-direction: column;
+  text-align: center;
+  animation: fadeIn 2s ease-in-out forwards;
+  user-select: none;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+h1, #logo, #description {
+  opacity: 0;
+  animation: fadeInContent 2s ease-in-out forwards;
+}
+
+#logo {
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 10px;
+  pointer-events: none;
+  draggable: false;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.1));
+}
+
+h1 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  margin: 10px 0;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+#description {
+  font-size: 0.85rem;
+  margin-top: 12px;
+  max-width: 90%;
+  padding: 16px;
+  text-align: left;
+  line-height: 1.4;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+#modeSwitcher {
+  background: #111;
+  color: #fff;
+  border: 1px solid #333;
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  transition: background 0.3s, border 0.3s;
+  font-size: 0.9rem;
+}
+
+#modeSwitcher:hover {
+  background: #222;
+  border-color: #555;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes fadeInContent {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+  h1 { font-size: 2rem; }
+  #description {
+    font-size: 0.75rem;
+    padding: 12px;
+    max-height: 45vh;
+  }
+  #modeSwitcher {
+    font-size: 0.75rem;
+    padding: 6px 10px;
+  }
+}

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Will of the Healer - Demo</title>
+    <meta name="crabamongspies" content="crabamongspies">
+    <style>
+        body {
+            background-color: #000;
+            margin: 0;
+            padding: 0;
+        }
+
+        #home-link, #controls {
+            font-family: 'Courier New', Courier, monospace;
+            color: #00FF00;
+            font-weight: bold;
+            position: fixed;
+            left: 10px;
+            z-index: 9999;
+        }
+
+        #home-link {
+            top: 10px;
+            font-size: 1.2em;
+            text-decoration: none;
+        }
+
+        #controls {
+            top: 40px;
+            font-size: 1em;
+        }
+
+        @media (max-width: 768px) {
+            #controls { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <a id="home-link" href="https://crabamongspies.github.io/archive/">Back</a>
+    <div id="controls">
+        <p>Z - Select</p>
+        <p>X - Secondary Select</p>
+        <p>Use arrow keys or gamepad to move</p>
+    </div>
+
+    <div id="game">
+        <canvas id="mainCanvas" width="320" height="288">No Canvas Support</canvas>
+    </div>
+
+    <div id="controller">
+        <div id="controller_dpad">
+            <div id="controller_left"></div>
+            <div id="controller_right"></div>
+            <div id="controller_up"></div>
+            <div id="controller_down"></div>
+        </div>
+        <div id="controller_select" class="capsuleBtn">Select</div>
+        <div id="controller_start" class="capsuleBtn">Start</div>
+        <div id="controller_b" class="roundBtn">B</div>
+        <div id="controller_a" class="roundBtn">A</div>
+    </div>
+
+    <script>
+        const customControls = {
+            "up": ["ArrowUp"], "down": ["ArrowDown"],
+            "left": ["ArrowLeft"], "right": ["ArrowRight"],
+            "a": ["z"], "b": ["x"], "start": ["Enter"], "select": ["Shift"]
+        };
+
+        let gamepadIndex = null, stopGamepadCheck = false;
+
+        function handleGamepadInput(gp) {
+            const buttons = gp.buttons;
+            const axes = gp.axes;
+            const keyMap = {
+                0: "z", 1: "x", 9: "Enter", 8: "Shift"
+            };
+
+            Object.entries(keyMap).forEach(([btn, key]) => {
+                if (buttons[btn]?.pressed) document.dispatchEvent(new KeyboardEvent("keydown", { key }));
+            });
+
+            if (axes[0] < -0.5) document.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowLeft" }));
+            if (axes[0] > 0.5) document.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowRight" }));
+            if (axes[1] < -0.5) document.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowUp" }));
+            if (axes[1] > 0.5) document.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowDown" }));
+        }
+
+        function updateGamepad() {
+            if (stopGamepadCheck || gamepadIndex === null) return;
+            const gp = navigator.getGamepads()[gamepadIndex];
+            if (gp) handleGamepadInput(gp);
+            requestAnimationFrame(updateGamepad);
+        }
+
+        window.addEventListener("gamepadconnected", (e) => {
+            gamepadIndex = e.gamepad.index;
+            stopGamepadCheck = false;
+            requestAnimationFrame(updateGamepad);
+        });
+
+        window.addEventListener("gamepaddisconnected", () => gamepadIndex = null);
+
+        setTimeout(() => stopGamepadCheck = (gamepadIndex === null), 10000);
+    </script>
+
+    <script src="binjgb.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/debugger.js"></script>
+</body>
+</html>
