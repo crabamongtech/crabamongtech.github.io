@@ -1,55 +1,48 @@
+/* Base Reset & Font */
 body {
-    background-color: #000;
-    color: white;
-    font-family: Arial, sans-serif;
-    text-align: center;
     margin: 0;
+    background: #000;
+    color: #fff;
+    font-family: 'JetBrains Mono', Arial, sans-serif;
     overflow: hidden;
     user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
 }
-
+@font-face {
+    font-family: 'JetBrains Mono';
+    src: url('https://crabamongspies.github.io/font.woff') format('woff');
+    font-display: swap;
+}
 canvas {
     position: absolute;
     top: 0;
     left: 0;
     display: block;
 }
-
-@font-face {
-    font-family: 'JetBrains Mono';
-    src: url('https://crabamongspies.github.io/font.woff') format('woff');
-    font-display: swap;
-}
-
 #homeLink {
     position: absolute;
     top: 5px;
     left: 5px;
-    font-size: 32px;
-    font-family: 'JetBrains Mono', monospace;
-    color: white;
+    font: 32px 'JetBrains Mono', monospace;
+    color: #fff;
     text-decoration: none;
     z-index: 20;
 }
-
 #centerContent {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 32px;
-    color: white;
+    font: 32px 'JetBrains Mono', monospace;
+    color: #fff;
     z-index: 10;
     text-align: center;
     line-height: 1.05;
-    padding: 0;
     margin: 0;
+    padding: 0;
 }
-
 .archive,
 .art-link,
 .woth-link {
@@ -58,12 +51,11 @@ canvas {
     padding: 0;
     text-decoration: none;
 }
-
 .art-link,
 .woth-link {
     color: skyblue;
     display: inline-flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
 }
