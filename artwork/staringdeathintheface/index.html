@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, minimum-scale=0.1">
-    <link rel="icon" href="https://crabamongspies.github.io/favicon.gif" type="image/gif">
     <title>Staring Death in the Face</title>
+    <link rel="icon" href="https://crabamongdev.github.io/favicon.png" type="image/png">
     <link rel="stylesheet" href="https://crabamongspies.github.io/font.ttf" type="text/css">
     <style>
         body {
@@ -21,50 +21,12 @@
             background: hsl(0, 0%, 90%);
             transition: background 300ms;
             pointer-events: none;
-            -webkit-user-select: none;
+            user-select: none;
         }
     </style>
     <script defer>
         document.addEventListener('DOMContentLoaded', () => {
-            document.addEventListener('contextmenu', (e) => {
-                if (e.target.tagName === 'IMG') e.preventDefault();
-            });
-        });
-    </script>
-</head>
-<body>
-    <img src="Staring%20Death%20in%20the%20face.png" alt="Staring Death in the Face" draggable="false">
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en" style="height: 100%; margin: 0;">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=0.1">
-    <link rel="icon" type="image/png" href="https://crabamongdev.github.io/favicon.png">
-    <title>Staring Death in the Face</title>
-    <link rel="stylesheet" href="https://crabamongspies.github.io/font.ttf" type="text/css">
-    <style>
-        body {
-            margin: 0;
-            height: 100%;
-            background: black;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-        img {
-            display: block;
-            background: hsl(0, 0%, 90%);
-            transition: background 300ms;
-            pointer-events: none;
-            -webkit-user-select: none;
-        }
-    </style>
-    <script defer>
-        document.addEventListener('DOMContentLoaded', () => {
-            document.addEventListener('contextmenu', (e) => {
+            document.addEventListener('contextmenu', e => {
                 if (e.target.tagName === 'IMG') e.preventDefault();
             });
         });
