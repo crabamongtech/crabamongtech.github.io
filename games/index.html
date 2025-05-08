@@ -6,145 +6,40 @@
   <link rel="icon" type="image/png" href="https://crabamongdev.github.io/favicon.png">
   <title>Current Projects</title>
   <link href="https://fonts.googleapis.com/css2?family=Exo+2&display=swap" rel="stylesheet">
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      user-select: none;
-    }
-
-    body {
-      font-family: 'Exo 2', sans-serif;
-      background: #3E4637;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      justify-content: center;
-      align-items: center;
-      animation: fadeIn 0.75s ease-in;
-    }
-
-    .main-container {
-      width: 100%;
-      max-width: 800px;
-      text-align: center;
-      padding: 1rem;
-    }
-
-    .omega-tier, .supporter-link {
-      color: #ffd1a3;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1.2rem;
-      transition: color 0.3s, transform 0.3s;
-      display: inline-block;
-      margin-top: 10px;
-    }
-
-    .omega-tier:hover,
-    .supporter-link:hover {
-      color: #ffddbb;
-      transform: scale(1.05);
-    }
-
-    .text-container {
-      margin-bottom: 1.5rem;
-    }
-
-    .tier-container {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .patreon-tier {
-      background: #4C5844;
-      border-radius: 15px;
-      padding: 1rem;
-      width: 250px;
-      transition: transform 0.3s ease;
-    }
-
-    .patreon-tier:hover {
-      transform: scale(1.05);
-    }
-
-    .patreon-tier img {
-      width: 100%;
-      max-width: 150px;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-    }
-
-    footer {
-      margin-top: auto;
-      background: #4C5844;
-      padding: 1rem;
-      text-align: center;
-      font-size: 0.85rem;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @media (max-width: 600px) {
-      .patreon-tier {
-        width: 100%;
-      }
-
-      .omega-tier {
-        font-size: 1rem;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <div class="main-container">
     <div class="text-container">
       <a class="omega-tier" href="https://crabamongdev.github.io/">&gt;BACK HOME&lt;</a>
-      <p>CURRENT PROJECTS</p>
+      <p style="margin-top: 4px; font-size: 1.1rem;">CURRENT PROJECTS</p>
     </div>
 
     <div class="tier-container">
-      <div class="patreon-tier">
-        <img src="duality.png" alt="Duality cover art">
+      <div class="game">
+        <img src="duality.png" alt="Duality poster">
         <p><strong>Duality</strong></p>
         <p>Welcome to Greentown.</p>
       </div>
-      <div class="patreon-tier">
+      <div class="game">
         <img src="tamarinvr.png" alt="TamarinVR poster">
         <p><strong>TamarinVR</strong></p>
         <p>Do you have what it takes to become<br>Immortal Monkey?</p>
       </div>
-      <div class="patreon-tier">
-        <img src="koritsu.gif" alt="Koritsu key art">
+      <div class="game">
+        <img src="koritsu.gif" alt="Koritsu poster">
         <p><strong>Koritsu</strong></p>
-        <p>A psychological sci-fi narrative about identity</p>
+        <p>Just keep the Ball rolling.</p>
+      </div>
+      <div class="game">
+        <img src="woth.png" alt="woth poster">
+        <p><strong>Will of the Healer</strong></p>
+        <p>The sly<br>blinds the weak</p>
       </div>
     </div>
   </div>
 
-  <script>
-    document.addEventListener("contextmenu", e => {
-      if (e.target.tagName === "IMG") e.preventDefault();
-    });
-
-    document.addEventListener("dragstart", e => {
-      if (e.target.tagName === "IMG") e.preventDefault();
-    });
-  </script>
-
+  <script src="code.js"></script>
 </body>
 </html>
