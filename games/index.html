@@ -2,53 +2,75 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/png" href="https://crabamongdev.github.io/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Current Projects</title>
-  <link href="https://fonts.googleapis.com/css2?family=Exo+2&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2&display=swap" rel="stylesheet" />
   <style>
-    /* Remove default link styling */
+    body {
+      font-family: 'Exo 2', sans-serif;
+      background: #3E4637;
+      color: white;
+      margin: 0;
+      padding: 1rem;
+      text-align: center;
+    }
     a {
-      text-decoration: none; /* No underline */
-      color: inherit; /* Inherit the text color from parent */
+      color: #ffd1a3;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    a:hover {
+      color: #ffddbb;
+    }
+    .projects {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .project {
+      background: #4C5844;
+      border-radius: 12px;
+      padding: 0.75rem;
+      width: 200px;
+    }
+    .project img {
+      width: 100%;
+      border-radius: 6px;
+      margin-bottom: 0.5rem;
+    }
+    .project p {
+      margin: 0.25rem 0;
+      font-size: 0.95rem;
+      line-height: 1.2rem;
     }
   </style>
 </head>
 <body>
 
-  <div class="main-container">
-    <div class="text-container">
-      <a class="omega-tier" href="https://crabamongdev.github.io/">&gt;BACK HOME&lt;</a>
-      <p style="margin-top: 4px; font-size: 1.1rem;">CURRENT PROJECTS</p>
-    </div>
+  <a href="https://crabamongdev.github.io/"> &gt;BACK HOME&lt; </a>
+  <h2>CURRENT PROJECTS</h2>
 
-    <div class="tier-container">
-      <div class="game">
-        <img src="duality.png" alt="Duality poster">
-        <p><strong>Duality</strong></p>
-        <p>Welcome to Greentown.</p>
-      </div>
-      <div class="game">
-        <a href="/games/tamarin/">
-          <img src="tamarinvr.png" alt="TamarinVR poster">
-          <p><strong>TamarinVR</strong></p>
-          <p>Do you have what it takes to become<br>Prime Monk?</p>
-        </a>
-      </div>
-      <div class="game">
-        <img src="koritsu.gif" alt="Koritsu poster">
-        <p><strong>Koritsu</strong></p>
-        <p>Just keep the Ball rolling.</p>
-      </div>
-      <div class="game">
-        <img src="woth.png" alt="woth poster">
-        <p><strong>Will of the Healer</strong></p>
-        <p>The sly<br>blinds the weak</p>
-      </div>
+  <div class="projects">
+    <div class="project">
+      <img src="duality.png" alt="Duality poster" />
+      <p><strong>Duality</strong></p>
+      <p>Welcome to Greentown.</p>
+    </div>
+    <div class="project">
+      <a href="https://crabamongspies.itch.io/koritsu">
+      <img src="koritsu.gif" alt="Koritsu poster" />
+      <p><strong>Koritsu</strong></p>
+      <p>Just keep the Ball rolling.</p>
+    </div>
+    <div class="project">
+      <a href="/games/woth/">
+      <img src="woth.png" alt="Will of the Healer poster" />
+      <p><strong>Will of the Healer</strong></p>
+      <p>The sly<br>blinds the weak</p>
     </div>
   </div>
 
-  <script src="code.js"></script>
 </body>
 </html>
