@@ -1,61 +1,50 @@
-/* Base Reset & Font */
-body {
-    margin: 0;
-    background: #000;
-    color: #fff;
-    font-family: 'JetBrains Mono', Arial, sans-serif;
-    overflow: hidden;
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: #000;
+  color: #fff;
+  font-family: monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* Prevent selection and dragging */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  user-drag: none;
 }
-@font-face {
-    font-family: 'JetBrains Mono';
-    src: url('https://crabamongspies.github.io/font.woff') format('woff');
-    font-display: swap;
+
+.centered {
+  white-space: pre;
+  text-align: center;
+
+  /* Prevent selection and dragging */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  user-drag: none;
 }
-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
+
+a {
+  color: #0f0;
+  text-decoration: none;
+
+  /* Prevent selection and dragging */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  user-drag: none;
 }
-#homeLink {
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    font: 32px 'JetBrains Mono', monospace;
-    color: #fff;
-    text-decoration: none;
-    z-index: 20;
-}
-#centerContent {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font: 32px 'JetBrains Mono', monospace;
-    color: #fff;
-    z-index: 10;
-    text-align: center;
-    line-height: 1.05;
-    margin: 0;
-    padding: 0;
-}
-.archive,
-.art-link,
-.woth-link {
-    font-size: 32px;
-    margin: 0;
-    padding: 0;
-    text-decoration: none;
-}
-.art-link,
-.woth-link {
-    color: skyblue;
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+
+a:hover {
+  color: #ff0;
+  text-decoration: underline;
 }

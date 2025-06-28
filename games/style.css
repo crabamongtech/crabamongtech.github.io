@@ -48,3 +48,7 @@ a:hover {
   color: #ff0;
   text-decoration: underline;
 }
+
+.tagline {
+  color: #ff0; /* yellow */
+}

@@ -3,85 +3,127 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Supporters</title>
+  <title>Supporters - crabamongspies</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #3E4637;
-      color: white;
-      text-align: center;
-      padding: 20px;
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: #000;
+      color: #fff;
+      font-family: monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      /* Prevent selection and dragging */
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
       user-select: none;
-    }
-    a {
-      color: #ffd1a3;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    a:hover {
-      color: #ffddbb;
-    }
-    .tier {
-      background: #4C5844;
-      border-radius: 10px;
-      padding: 15px;
-      margin: 15px auto;
-      max-width: 300px;
-    }
-    img {
-      width: 100px;
-      border-radius: 8px;
+      -webkit-user-drag: none;
       user-drag: none;
-      user-select: none;
     }
-    pre {
-      white-space: pre-wrap;
-      margin-top: 20px;
+
+    .centered {
+      white-space: pre;
+      text-align: center;
+
+      /* Prevent selection and dragging */
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      user-drag: none;
+    }
+
+    a {
+      color: #0f0;
+      text-decoration: none;
+
+      /* Prevent selection and dragging */
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      user-drag: none;
+    }
+
+    a:hover {
+      color: #ff0;
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
+  <div class="centered">
+> <a href="https://crabamongdev.github.io/">BACK HOME</a>
 
-  <a href="https://crabamongdev.github.io/">>BACK HOME<</a>
-  <h1>SUPPORTERS</h1>
-
-  <pre id="supportersContent">Loading supporters...</pre>
-
-  <div class="tier">
-    <p>DONATE</p>
-    <p>Your name will be featured in credits and on supporter wall</p>
-    <a href="https://www.patreon.com/checkout/Crabamongspies?pvid=1129938">($5)</a> |
-    <a href="https://www.patreon.com/checkout/Crabamongspies?pvid=1129966">($20)</a>
-  </div>
-
-  <div class="tier">
-    <img src="tom.png" alt="OMEGA SUPPORTER" />
-    <p>OMEGA SUPPORTER - $1 / month</p>
-    <p>Early access + name in credits</p>
-    <a href="https://www.patreon.com/checkout/Crabamongspies?rid=25031044">JOIN</a>
-  </div>
-
-  <div class="tier">
-    <img src="trashy.gif" alt="ULTRA DELUXE SUPPORTER" />
-    <p>ULTRA DELUXE SUPPORTER - $10 / month</p>
-    <p>Support a good cause</p>
-    <a href="https://www.patreon.com/checkout/Crabamongspies?rid=25032520">JOIN</a>
+SUPPORTERS
+==========
+<pre id="supportersContent">Loading supporters...</pre>
+----------------------------
+DONATE
+Your name will be featured in credits
+and on supporter wall
+<a href="https://www.patreon.com/checkout/Crabamongspies?pvid=1129938">($5)</a>
+<a href="https://www.patreon.com/checkout/Crabamongspies?pvid=1129966">($20)</a>
+----------------------------
+OMEGA SUPPORTER - $1 / month
+Early access + name in credits
+> <a href="https://www.patreon.com/checkout/Crabamongspies?rid=25031044">JOIN</a>
+----------------------------
+ULTRA DELUXE SUPPORTER - $10 / month
+Support a good cause
+> <a href="https://www.patreon.com/checkout/Crabamongspies?rid=25032520">JOIN</a>
+----------------------------
   </div>
 
   <script>
+    let supportersLines = [];
+    let hueOffset = 0;
+
+    function escapeHTML(text) {
+      return text.replace(/&/g, "&amp;")
+                 .replace(/</g, "&lt;")
+                 .replace(/>/g, "&gt;");
+    }
+
     async function loadSupporters() {
       try {
         const response = await fetch("https://api.github.com/gists/73617cf0d3c7e9ea28b626c19f2d8db2");
         const gistData = await response.json();
         const supportersText = Object.values(gistData.files)[0].content;
-        document.getElementById("supportersContent").innerText = supportersText;
+
+        supportersLines = supportersText.split('\n').map(line => escapeHTML(line));
+        animateRainbow();
       } catch {
         document.getElementById("supportersContent").innerText = "Failed to load supporters.";
       }
     }
+
+    function animateRainbow() {
+      const container = document.getElementById("supportersContent");
+
+      // For each line, assign a hue shifted by line index + global offset, cycling through 360deg
+      const coloredLines = supportersLines.map((line, i) => {
+        const hue = (hueOffset + i * 30) % 360; // 30deg apart per line
+        return `<span style="color: hsl(${hue}, 100%, 60%)">${line}</span>`;
+      });
+
+      container.innerHTML = coloredLines.join('\n');
+
+      hueOffset += 1; // speed of hue rotation, tweak this for faster/slower
+      if (hueOffset >= 360) hueOffset = 0;
+
+      requestAnimationFrame(animateRainbow);
+    }
+
     window.onload = loadSupporters;
 
-    // Disable right-click and drag on images
+    // Disable right-click and drag on images (if any added later)
     document.addEventListener("contextmenu", e => {
       if(e.target.tagName === "IMG") e.preventDefault();
     });
@@ -89,6 +131,5 @@
       if(e.target.tagName === "IMG") e.preventDefault();
     });
   </script>
-
 </body>
 </html>
