@@ -32,7 +32,7 @@ html, body {
 }
 
 a {
-  color: #0f0;
+  color: #000;
   text-decoration: none;
 
   /* Prevent selection and dragging */
