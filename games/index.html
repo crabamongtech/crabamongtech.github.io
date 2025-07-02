@@ -7,27 +7,100 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="centered">
-&gt; <a href="https://crabamongdev.github.io/">BACK HOME</a>
+  <div class="centered" id="content">
+&gt; <a href="/">BACK</a>
 
 CURRENT PROJECTS
 ================
 
+<div class="project" data-id="duality">
 DUALITY
 <span class="tagline">Welcome to Greentown.</span>
+</div>
 
 ----------------------------
 
+<div class="project" data-id="koritsu">
 KORITSU
 <span class="tagline">Just keep the Ball rolling.</span>
+</div>
 
 ----------------------------
 
+<div class="project" data-id="healer">
 WILL OF THE HEALER
 <span class="tagline">The sly
 blinds the weak</span>
+</div>
 
 ----------------------------
   </div>
+
+  <script>
+    const content = document.getElementById("content");
+
+    const pages = {
+      duality: `&gt; <a href="#" onclick="goBack()">BACK</a>
+
+DUALITY
+=======
+
+Welcome to Greentown.
+
+<img src="duality.png" alt="Duality Screenshot">
+
+----------------------------`,
+      koritsu: `&gt; <a href="#" onclick="goBack()">BACK</a>
+
+KORITSU
+=======
+
+Just keep the ball rolling in this RPG.
+
+<img src="koritsu.gif" alt="Koritsu Screenshot">
+
+----------------------------`,
+      healer: `&gt; <a href="#" onclick="goBack()">BACK</a>
+
+WILL OF THE HEALER
+==================
+
+The sly
+blinds the weak
+
+<img src="healer.png" alt="Will of the Healer Screenshot">
+
+----------------------------`
+    };
+
+    function goBack() {
+      history.back();
+    }
+
+    function load(project, push = true) {
+      content.innerHTML = pages[project];
+      if (push) history.pushState({ id: project }, "", "#" + project);
+    }
+
+    document.querySelectorAll(".project").forEach(el => {
+      el.style.cursor = "pointer";
+      el.onclick = () => load(el.dataset.id);
+    });
+
+    window.onpopstate = (e) => {
+      if (e.state && e.state.id) {
+        load(e.state.id, false);
+      } else {
+        location.reload(); // fallback
+      }
+    };
+
+    if (location.hash) {
+      const id = location.hash.slice(1);
+      if (pages[id]) {
+        load(id, false);
+      }
+    }
+  </script>
 </body>
 </html>
