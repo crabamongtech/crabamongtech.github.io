@@ -4,58 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Supporters - crabamongspies</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background-color: #000;
-      color: #fff;
-      font-family: monospace;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      /* Prevent selection and dragging */
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      -webkit-user-drag: none;
-      user-drag: none;
-    }
-
-    .centered {
-      white-space: pre;
-      text-align: center;
-
-      /* Prevent selection and dragging */
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      -webkit-user-drag: none;
-      user-drag: none;
-    }
-
-    a {
-      color: #0f0;
-      text-decoration: none;
-
-      /* Prevent selection and dragging */
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      -webkit-user-drag: none;
-      user-drag: none;
-    }
-
-    a:hover {
-      color: #ff0;
-      text-decoration: underline;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="centered">
@@ -65,17 +14,17 @@ SUPPORTERS
 ==========
 <pre id="supportersContent">Loading supporters...</pre>
 ----------------------------
-DONATE
+<span id="rainbow-donate">DONATE</span>
 Your name will be featured in credits
 and on supporter wall
 <a href="https://www.patreon.com/checkout/Crabamongspies?pvid=1129938">($5)</a>
 <a href="https://www.patreon.com/checkout/Crabamongspies?pvid=1129966">($20)</a>
 ----------------------------
-OMEGA SUPPORTER - $1 / month
+<span id="rainbow-omega">OMEGA SUPPORTER</span> - $1 / month
 Early access + name in credits
 > <a href="https://www.patreon.com/checkout/Crabamongspies?rid=25031044">JOIN</a>
 ----------------------------
-ULTRA DELUXE SUPPORTER - $10 / month
+<span id="rainbow-ultra">ULTRA DELUXE SUPPORTER</span> - $10 / month
 Support a good cause
 > <a href="https://www.patreon.com/checkout/Crabamongspies?rid=25032520">JOIN</a>
 ----------------------------
@@ -107,28 +56,32 @@ Support a good cause
     function animateRainbow() {
       const container = document.getElementById("supportersContent");
 
-      // For each line, assign a hue shifted by line index + global offset, cycling through 360deg
       const coloredLines = supportersLines.map((line, i) => {
-        const hue = (hueOffset + i * 30) % 360; // 30deg apart per line
+        const hue = (hueOffset + i * 30) % 360;
         return `<span style="color: hsl(${hue}, 100%, 60%)">${line}</span>`;
       });
 
       container.innerHTML = coloredLines.join('\n');
 
-      hueOffset += 1; // speed of hue rotation, tweak this for faster/slower
-      if (hueOffset >= 360) hueOffset = 0;
+      const donate = document.getElementById("rainbow-donate");
+      const omega = document.getElementById("rainbow-omega");
+      const ultra = document.getElementById("rainbow-ultra");
 
+      if (donate) donate.style.color = `hsl(${(hueOffset + 0) % 360}, 100%, 60%)`;
+      if (omega) omega.style.color = `hsl(${(hueOffset + 120) % 360}, 100%, 60%)`;
+      if (ultra) ultra.style.color = `hsl(${(hueOffset + 240) % 360}, 100%, 60%)`;
+
+      hueOffset = (hueOffset + 1) % 360;
       requestAnimationFrame(animateRainbow);
     }
 
     window.onload = loadSupporters;
 
-    // Disable right-click and drag on images (if any added later)
     document.addEventListener("contextmenu", e => {
-      if(e.target.tagName === "IMG") e.preventDefault();
+      if (e.target.tagName === "IMG") e.preventDefault();
     });
     document.addEventListener("dragstart", e => {
-      if(e.target.tagName === "IMG") e.preventDefault();
+      if (e.target.tagName === "IMG") e.preventDefault();
     });
   </script>
 </body>
