@@ -42,53 +42,66 @@
 <div class="centered" id="blog">Loading latest blog post...</div>
 
 <script>
-  async function fetchLatestGist() {
-    const blogDiv = document.getElementById('blog');
-    try {
-      // Clear any cached request for the gist
-      if ('caches' in window) {
-        const cacheNames = await caches.keys();
-        for (const name of cacheNames) {
-          await caches.delete(name);
-        }
+  const blogDiv = document.getElementById('blog');
+
+  const colorMap = {
+    r: 'red',
+    g: 'green',
+    b: 'blue',
+    y: 'yellow',
+    c: 'cyan',
+    m: 'magenta',
+    w: 'white',
+    k: 'black',
+    o: 'orange',
+    p: 'purple'
+  };
+
+  function parseColors(text) {
+    // Replace markup like r%Word%r with colored span
+    const parts = text.split(/([rgbymcwkop]%.*?%\1)/gi);
+    return parts.map(part => {
+      const match = part.match(/^([rgbymcwkop])%(.+?)%\1$/i);
+      if (match) {
+        const color = colorMap[match[1].toLowerCase()] || 'white';
+        const span = document.createElement('span');
+        span.style.color = color;
+        span.textContent = match[2];
+        return span;
+      } else {
+        // Normal text, replace newlines with <br>
+        const container = document.createElement('span');
+        container.textContent = part;
+        return container;
       }
+    });
+  }
 
-      // Fetch Gist with cache disabled and timestamp query
-      const url = `https://gist.githubusercontent.com/crabamongdev/f8b63c95e751b7d0c6014d0a186376df/raw?t=${Date.now()}`;
-      const response = await fetch(url, { cache: "no-store" });
-      let content = await response.text();
+  async function fetchLatestGist() {
+    try {
+      const response = await fetch(
+        'https://gist.githubusercontent.com/crabamongdev/f8b63c95e751b7d0c6014d0a186376df/raw',
+        { cache: "no-store" }
+      );
+      const content = await response.text();
 
-      // Color mapping
-      const colorMap = {
-        r: 'red',
-        g: 'green',
-        b: 'blue',
-        y: 'yellow',
-        c: 'cyan',
-        m: 'magenta',
-        w: 'white',
-        k: 'black',
-        o: 'orange',
-        p: 'purple'
-      };
+      // Clear previous content
+      blogDiv.innerHTML = '';
 
-      // Replace color markup like r%Word%r
-      content = content.replace(/([rgbymcwkop])%(.+?)%\1/gi, (_, code, word) => {
-        const color = colorMap[code.toLowerCase()] || 'white';
-        return `<span style="color:${color}">${word}</span>`;
+      // Parse colored text
+      const elements = parseColors(content);
+      elements.forEach(el => {
+        blogDiv.appendChild(el);
       });
-
-      // Preserve line breaks
-      blogDiv.innerHTML = content.replace(/\n/g, '<br>');
     } catch (err) {
       blogDiv.textContent = 'Error loading blog post: ' + err.message;
     }
   }
 
-  // Clear site cache and fetch the Gist immediately on load
+  // Fetch immediately
   fetchLatestGist();
 
-  // Auto-refresh every 1 minute
+  // Auto-refresh every 1 minute (you can adjust)
   setInterval(fetchLatestGist, 60);
 </script>
 </body>
