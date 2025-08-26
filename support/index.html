@@ -4,11 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Supporters - crabamongspies</title>
+  <link rel="icon" type="image/png" href="https://crabamongtech.github.io/favicon.png">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="centered">
-> <a href="https://crabamongdev.github.io/">BACK HOME</a>
+> <a href="/">BACK HOME</a>
 
 SUPPORTERS
 ==========
@@ -42,13 +43,14 @@ Support a good cause
 
     async function loadSupporters() {
       try {
-        const response = await fetch("https://api.github.com/gists/73617cf0d3c7e9ea28b626c19f2d8db2");
-        const gistData = await response.json();
-        const supportersText = Object.values(gistData.files)[0].content;
+        // always fetch fresh version, no caching
+        const url = "https://gist.githubusercontent.com/crabamongtech/73617cf0d3c7e9ea28b626c19f2d8db2/raw?t=" + Date.now();
+        const response = await fetch(url, { cache: "no-store" });
+        const supportersText = await response.text();
 
         supportersLines = supportersText.split('\n').map(line => escapeHTML(line));
         animateRainbow();
-      } catch {
+      } catch (err) {
         document.getElementById("supportersContent").innerText = "Failed to load supporters.";
       }
     }
@@ -77,6 +79,7 @@ Support a good cause
 
     window.onload = loadSupporters;
 
+    // disable right-click/drag on images
     document.addEventListener("contextmenu", e => {
       if (e.target.tagName === "IMG") e.preventDefault();
     });

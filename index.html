@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Crabs Tech Related Jargon</title>
+  <link rel="icon" type="image/png" href="favicon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -72,7 +73,7 @@ function parseColors(text) {
 
 async function fetchLatestGist() {
   try {
-    const url = `https://gist.githubusercontent.com/crabamongdev/f8b63c95e751b7d0c6014d0a186376df/raw?t=${Date.now()}`;
+    const url = `https://gist.githubusercontent.com/crabamongtech/f8b63c95e751b7d0c6014d0a186376df/raw?t=${Date.now()}`;
     const response = await fetch(url, { cache: "no-store" });
     const content = await response.text();
     blogDiv.innerHTML = '';
