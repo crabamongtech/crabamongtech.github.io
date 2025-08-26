@@ -45,7 +45,15 @@
   async function fetchLatestGist() {
     const blogDiv = document.getElementById('blog');
     try {
-      // Add timestamp to prevent caching
+      // Clear any cached request for the gist
+      if ('caches' in window) {
+        const cacheNames = await caches.keys();
+        for (const name of cacheNames) {
+          await caches.delete(name);
+        }
+      }
+
+      // Fetch Gist with cache disabled and timestamp query
       const url = `https://gist.githubusercontent.com/crabamongdev/f8b63c95e751b7d0c6014d0a186376df/raw?t=${Date.now()}`;
       const response = await fetch(url, { cache: "no-store" });
       let content = await response.text();
@@ -77,9 +85,10 @@
     }
   }
 
-  // Fetch immediately on load
+  // Clear site cache and fetch the Gist immediately on load
   fetchLatestGist();
 
+  // Auto-refresh every 1 minute
   setInterval(fetchLatestGist, 60);
 </script>
 </body>
