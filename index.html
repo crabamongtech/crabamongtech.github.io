@@ -45,8 +45,9 @@
   async function fetchLatestGist() {
     const blogDiv = document.getElementById('blog');
     try {
+      // Add timestamp to prevent caching
       const url = `https://gist.githubusercontent.com/crabamongdev/f8b63c95e751b7d0c6014d0a186376df/raw?t=${Date.now()}`;
-      const response = await fetch(url);
+      const response = await fetch(url, { cache: "no-store" });
       let content = await response.text();
 
       // Color mapping
@@ -63,7 +64,7 @@
         p: 'purple'
       };
 
-      // Replace markup like r%Word%r, g%Word%g, etc.
+      // Replace color markup like r%Word%r
       content = content.replace(/([rgbymcwkop])%(.+?)%\1/gi, (_, code, word) => {
         const color = colorMap[code.toLowerCase()] || 'white';
         return `<span style="color:${color}">${word}</span>`;
@@ -76,9 +77,9 @@
     }
   }
 
+  // Fetch immediately on load
   fetchLatestGist();
 
-  // Auto-refresh every 5 minutes
   setInterval(fetchLatestGist, 60);
 </script>
 </body>
