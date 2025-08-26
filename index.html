@@ -5,29 +5,9 @@
   <title>Crabs Tech Related Jargon</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css" />
-  <style>
-    /* Add flex container for horizontal layout */
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      gap: 2rem;
-      padding-top: 2rem;
-    }
-
-    /* Make both blocks look the same as original */
-    .centered {
-      white-space: pre;
-      text-align: center;
-    }
-
-    #blog {
-      white-space: pre;
-      text-align: center;
-    }
-  </style>
 </head>
 <body>
+  <!-- Main block -->
   <div class="centered">
        CRABAMONGSPIES
 ============================
@@ -38,71 +18,73 @@
 ----------------------------
   </div>
 
-  <!-- Blog Section -->
+  <!-- Blog block -->
 <div class="centered" id="blog">Loading latest blog post...</div>
 
 <script>
-  const blogDiv = document.getElementById('blog');
+const blogDiv = document.getElementById('blog');
 
-  const colorMap = {
-    r: 'red',
-    g: 'green',
-    b: 'blue',
-    y: 'yellow',
-    c: 'cyan',
-    m: 'magenta',
-    w: 'white',
-    k: 'black',
-    o: 'orange',
-    p: 'purple'
-  };
+const colorMap = { 
+  r:'red', g:'green', b:'blue', y:'yellow', 
+  c:'cyan', m:'magenta', w:'white', k:'black', 
+  o:'orange', p:'purple' 
+};
 
-  function parseColors(text) {
-    // Replace markup like r%Word%r with colored span
-    const parts = text.split(/([rgbymcwkop]%.*?%\1)/gi);
-    return parts.map(part => {
-      const match = part.match(/^([rgbymcwkop])%(.+?)%\1$/i);
-      if (match) {
-        const color = colorMap[match[1].toLowerCase()] || 'white';
-        const span = document.createElement('span');
-        span.style.color = color;
-        span.textContent = match[2];
-        return span;
-      } else {
-        // Normal text, replace newlines with <br>
-        const container = document.createElement('span');
-        container.textContent = part;
-        return container;
+function parseColors(text) {
+  const fragment = document.createDocumentFragment();
+  const lines = text.split('\n');
+
+  lines.forEach((line, idx) => {
+    let lastIndex = 0;
+    const regex = /([rgbymcwkop])%(.+?)%\1/gi;
+    let match;
+
+    while ((match = regex.exec(line)) !== null) {
+      // Append text before the colored word
+      if (match.index > lastIndex) {
+        const normalText = line.slice(lastIndex, match.index);
+        fragment.appendChild(document.createTextNode(normalText));
       }
-    });
-  }
 
-  async function fetchLatestGist() {
-    try {
-      const response = await fetch(
-        'https://gist.githubusercontent.com/crabamongdev/f8b63c95e751b7d0c6014d0a186376df/raw',
-        { cache: "no-store" }
-      );
-      const content = await response.text();
+      // Append colored word
+      const span = document.createElement('span');
+      const color = colorMap[match[1].toLowerCase()] || 'white';
+      span.style.color = color;
+      span.textContent = match[2];
+      fragment.appendChild(span);
 
-      // Clear previous content
-      blogDiv.innerHTML = '';
-
-      // Parse colored text
-      const elements = parseColors(content);
-      elements.forEach(el => {
-        blogDiv.appendChild(el);
-      });
-    } catch (err) {
-      blogDiv.textContent = 'Error loading blog post: ' + err.message;
+      lastIndex = regex.lastIndex;
     }
+
+    // Append remaining text after last match
+    if (lastIndex < line.length) {
+      fragment.appendChild(document.createTextNode(line.slice(lastIndex)));
+    }
+
+    // Add line break except for last line
+    if (idx < lines.length - 1) {
+      fragment.appendChild(document.createElement('br'));
+    }
+  });
+
+  return fragment;
+}
+
+async function fetchLatestGist() {
+  try {
+    const url = `https://gist.githubusercontent.com/crabamongdev/f8b63c95e751b7d0c6014d0a186376df/raw?t=${Date.now()}`;
+    const response = await fetch(url, { cache: "no-store" });
+    const content = await response.text();
+    blogDiv.innerHTML = '';
+    blogDiv.appendChild(parseColors(content));
+  } catch (err) {
+    blogDiv.textContent = 'Error loading blog post: ' + err.message;
   }
+}
 
-  // Fetch immediately
-  fetchLatestGist();
-
-  // Auto-refresh every 1 minute (you can adjust)
-  setInterval(fetchLatestGist, 60);
+// Fetch immediately and every minute
+fetchLatestGist();
+setInterval(fetchLatestGist, 5000);
 </script>
 </body>
 </html>
