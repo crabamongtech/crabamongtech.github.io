@@ -5,9 +5,13 @@ html, body {
   background-color: #000;
   color: #fff;
   font-family: monospace;
+
+  /* Flex layout for horizontal positioning */
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  gap: 2rem;
+  padding-top: 2rem;
 
   /* Prevent selection and dragging */
   -webkit-user-select: none;
@@ -20,7 +24,8 @@ html, body {
 
 .centered {
   white-space: pre;
-  text-align: center;
+  text-align: left;
+  min-width: 300px;
 
   /* Prevent selection and dragging */
   -webkit-user-select: none;
@@ -31,6 +36,14 @@ html, body {
   user-drag: none;
 }
 
+/* Blog uses same style as .centered */
+#blog {
+  min-width: 300px;
+  white-space: pre;
+  text-align: left;
+}
+
+/* Links styling */
 a {
   color: #0f0;
   text-decoration: none;

@@ -5,6 +5,27 @@
   <title>Crabs Tech Related Jargon</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Add flex container for horizontal layout */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 2rem;
+      padding-top: 2rem;
+    }
+
+    /* Make both blocks look the same as original */
+    .centered {
+      white-space: pre;
+      text-align: center;
+    }
+
+    #blog {
+      white-space: pre;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
   <div class="centered">
@@ -16,5 +37,49 @@
   > <a href="/support">Support me</a>
 ----------------------------
   </div>
+
+  <!-- Blog Section -->
+<div class="centered" id="blog">Loading latest blog post...</div>
+
+<script>
+  async function fetchLatestGist() {
+    const blogDiv = document.getElementById('blog');
+    try {
+      const url = `https://gist.githubusercontent.com/crabamongdev/f8b63c95e751b7d0c6014d0a186376df/raw?t=${Date.now()}`;
+      const response = await fetch(url);
+      let content = await response.text();
+
+      // Color mapping
+      const colorMap = {
+        r: 'red',
+        g: 'green',
+        b: 'blue',
+        y: 'yellow',
+        c: 'cyan',
+        m: 'magenta',
+        w: 'white',
+        k: 'black',
+        o: 'orange',
+        p: 'purple'
+      };
+
+      // Replace markup like r%Word%r, g%Word%g, etc.
+      content = content.replace(/([rgbymcwkop])%(.+?)%\1/gi, (_, code, word) => {
+        const color = colorMap[code.toLowerCase()] || 'white';
+        return `<span style="color:${color}">${word}</span>`;
+      });
+
+      // Preserve line breaks
+      blogDiv.innerHTML = content.replace(/\n/g, '<br>');
+    } catch (err) {
+      blogDiv.textContent = 'Error loading blog post: ' + err.message;
+    }
+  }
+
+  fetchLatestGist();
+
+  // Auto-refresh every 5 minutes
+  setInterval(fetchLatestGist, 60);
+</script>
 </body>
 </html>
