@@ -1,16 +1,14 @@
 # crabamongdev.github.io
 
 **Official website for Crabamongspies**  
-Games • Art • SFM Videos
 
 ## 🌐 Overview
 
 This is the public landing site for **Crabamongspies**
 - **Indie games**
-- **Art projects**
-- **Source Filmmaker (SFM) videos**
+- **Tech related stuff**
 
-Visit: [https://crabamongdev.github.io](https://crabamongdev.github.io)
+Visit: [https://crabamongtech.github.io](https://crabamongtech.github.io)
 
 
 
