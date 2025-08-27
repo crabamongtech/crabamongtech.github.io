@@ -2,24 +2,25 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
+  width: 100%;
+  overflow: hidden; /* Prevent scrolling */
   background-color: #000;
   color: #fff;
   font-family: monospace;
 
-  /* Flex layout for horizontal blocks */
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 2rem;
-  padding-top: 2rem;
+  flex-direction: column; /* keep vertical stacking */
+  justify-content: flex-start;
+  align-items: center;
+  padding: 2rem;
 
-  /* Prevent selection and dragging */
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
   -webkit-user-drag: none;
   user-drag: none;
+  position: relative; /* needed for blog positioning */
 }
 
 .centered {
@@ -27,7 +28,6 @@ html, body {
   text-align: left;
   min-width: 300px;
 
-  /* Prevent selection and dragging */
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -39,13 +39,6 @@ html, body {
 a {
   color: #0f0;
   text-decoration: none;
-
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  -webkit-user-drag: none;
-  user-drag: none;
 }
 
 a:hover {
@@ -53,9 +46,11 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Blog uses same style as .centered */
 #blog {
   min-width: 300px;
   white-space: pre;
   text-align: left;
+  position: absolute; /* position independently */
+  top: 2rem;          /* same top padding as body */
+  right: 2rem;        /* keep it near the right edge */
 }

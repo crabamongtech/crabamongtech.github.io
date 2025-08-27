@@ -5,87 +5,86 @@
   <title>Crabs Tech Related Jargon</title>
   <link rel="icon" type="image/png" href="favicon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <!-- Main block -->
   <div class="centered">
-       CRABAMONGSPIES
+CRABAMONGSPIES
 ============================
 [ STUFF ]
-  > <a href="/games">Games</a>
-  > <a href="https://www.youtube.com/channel/UC49TI8uG9czJbQy2kGMNjiA?sub_confirmation=1" target="_blank">YouTube</a>
-  > <a href="/support">Support me</a>
+> <a href="/games">Games</a>
+> <a href="https://www.youtube.com/channel/UC49TI8uG9czJbQy2kGMNjiA?sub_confirmation=1" target="_blank">YouTube</a>
+> <a href="/support">Support me</a>
 ----------------------------
   </div>
 
   <!-- Blog block -->
-<div class="centered" id="blog">Loading latest blog post...</div>
+  <div class="centered" id="blog">Loading latest blog post...</div>
 
 <script>
-const blogDiv = document.getElementById('blog');
+(function() {
+  // Redirect mobile users
+  if (/Mobi|Android/i.test(navigator.userAgent)) {
+    window.location.href = "mobile.html";
+    return;
+  }
 
-const colorMap = { 
-  r:'red', g:'green', b:'blue', y:'yellow', 
-  c:'cyan', m:'magenta', w:'white', k:'black', 
-  o:'orange', p:'purple' 
-};
+  const blogDiv = document.getElementById('blog');
 
-function parseColors(text) {
-  const fragment = document.createDocumentFragment();
-  const lines = text.split('\n');
+  const colorMap = { 
+    r:'red', g:'green', b:'blue', y:'yellow', 
+    c:'cyan', m:'magenta', w:'white', k:'black', 
+    o:'orange', p:'purple' 
+  };
 
-  lines.forEach((line, idx) => {
-    let lastIndex = 0;
-    const regex = /([rgbymcwkop])%(.+?)%\1/gi;
-    let match;
+  function parseColors(text) {
+    const fragment = document.createDocumentFragment();
+    const lines = text.split('\n');
 
-    while ((match = regex.exec(line)) !== null) {
-      // Append text before the colored word
-      if (match.index > lastIndex) {
-        const normalText = line.slice(lastIndex, match.index);
-        fragment.appendChild(document.createTextNode(normalText));
+    lines.forEach((line, idx) => {
+      let lastIndex = 0;
+      const regex = /([rgbymcwkop])%(.+?)%\1/gi;
+      let match;
+
+      while ((match = regex.exec(line)) !== null) {
+        if (match.index > lastIndex) {
+          fragment.appendChild(document.createTextNode(line.slice(lastIndex, match.index)));
+        }
+
+        const span = document.createElement('span');
+        span.style.color = colorMap[match[1].toLowerCase()] || 'white';
+        span.textContent = match[2];
+        fragment.appendChild(span);
+
+        lastIndex = regex.lastIndex;
       }
 
-      // Append colored word
-      const span = document.createElement('span');
-      const color = colorMap[match[1].toLowerCase()] || 'white';
-      span.style.color = color;
-      span.textContent = match[2];
-      fragment.appendChild(span);
+      if (lastIndex < line.length) {
+        fragment.appendChild(document.createTextNode(line.slice(lastIndex)));
+      }
 
-      lastIndex = regex.lastIndex;
-    }
+      if (idx < lines.length - 1) fragment.appendChild(document.createElement('br'));
+    });
 
-    // Append remaining text after last match
-    if (lastIndex < line.length) {
-      fragment.appendChild(document.createTextNode(line.slice(lastIndex)));
-    }
-
-    // Add line break except for last line
-    if (idx < lines.length - 1) {
-      fragment.appendChild(document.createElement('br'));
-    }
-  });
-
-  return fragment;
-}
-
-async function fetchLatestGist() {
-  try {
-    const url = `https://gist.githubusercontent.com/crabamongtech/f8b63c95e751b7d0c6014d0a186376df/raw?t=${Date.now()}`;
-    const response = await fetch(url, { cache: "no-store" });
-    const content = await response.text();
-    blogDiv.innerHTML = '';
-    blogDiv.appendChild(parseColors(content));
-  } catch (err) {
-    blogDiv.textContent = 'Error loading blog post: ' + err.message;
+    return fragment;
   }
-}
 
-// Fetch immediately and every minute
-fetchLatestGist();
-setInterval(fetchLatestGist, 5000);
+  async function fetchLatestGist() {
+    try {
+      const url = `https://gist.githubusercontent.com/crabamongtech/f8b63c95e751b7d0c6014d0a186376df/raw?t=${Date.now()}`;
+      const response = await fetch(url, { cache: "no-store" });
+      const content = await response.text();
+      blogDiv.innerHTML = '';
+      blogDiv.appendChild(parseColors(content));
+    } catch (err) {
+      blogDiv.textContent = 'Error loading blog post: ' + err.message;
+    }
+  }
+
+  fetchLatestGist();
+  setInterval(fetchLatestGist, 5000);
+})();
 </script>
 </body>
 </html>
