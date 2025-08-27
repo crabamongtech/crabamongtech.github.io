@@ -3,27 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Current Projects - crabamongspies</title>
+  <title>Current projects</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="centered" id="content">
 &gt; <a href="/">BACK</a>
 
-CURRENT WIP GAMES
+My Github projects
 ================
 
-<div class="project" data-id="duality">
-DUALITY
-<span class="tagline">Welcome to Greentown.</span>
-</div>
-
-----------------------------
-
-<div class="project" data-id="healer">
-WILL OF THE HEALER
-<span class="tagline">The sly
-blinds the weak</span>
+<div class="project" data-id="fractal">
+Fractal
+<span class="tagline">A program to check pc info</span>
 </div>
 
 ----------------------------
@@ -33,27 +25,18 @@ blinds the weak</span>
     const content = document.getElementById("content");
 
     const pages = {
-      duality: `&gt; <a href="#" onclick="goBack()">BACK</a>
+      fractal: `&gt; <a href="#" onclick="goBack()">BACK</a>
 
-DUALITY
+FRACTAL
 =======
 
-Welcome to Greentown.
+A program to check pc info for windows
+it lets the user check CPU Usage, GPU VENDOR, RAM USAGE
+and other useful info
 
-<img src="duality.png" alt="Duality Screenshot">
+<img src="fractal.png" alt="fractal logo">
 
 ----------------------------`,
-      healer: `&gt; <a href="#" onclick="goBack()">BACK</a>
-
-WILL OF THE HEALER
-==================
-
-The sly
-blinds the weak
-
-<img src="healer.png" alt="Will of the Healer Screenshot">
-
-----------------------------`
     };
 
     function goBack() {
