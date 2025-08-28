@@ -12,9 +12,9 @@
 > <a href="/">BACK HOME</a>
 
 SUPPORTERS
-==========
+====================
 <pre id="supportersContent">Loading supporters...</pre>
-----------------------------
+====================
 <span id="rainbow-donate">DONATE</span>
 Your name will be featured on supporter wall
 <a href="https://www.patreon.com/checkout/Crabamongspies?pvid=1129938">($5)</a>
@@ -27,7 +27,6 @@ Early access + name in credits
 <span id="rainbow-ultra">ULTRA DELUXE SUPPORTER</span> - $10 / month
 Support a good cause "and my future in tech"
 > <a href="https://www.patreon.com/checkout/Crabamongspies?rid=25032520">JOIN</a>
-----------------------------
   </div>
 
   <script>
@@ -42,7 +41,6 @@ Support a good cause "and my future in tech"
 
     async function loadSupporters() {
       try {
-        // always fetch fresh version, no caching
         const url = "https://gist.githubusercontent.com/crabamongtech/73617cf0d3c7e9ea28b626c19f2d8db2/raw?t=" + Date.now();
         const response = await fetch(url, { cache: "no-store" });
         const supportersText = await response.text();
@@ -78,7 +76,6 @@ Support a good cause "and my future in tech"
 
     window.onload = loadSupporters;
 
-    // disable right-click/drag on images
     document.addEventListener("contextmenu", e => {
       if (e.target.tagName === "IMG") e.preventDefault();
     });
