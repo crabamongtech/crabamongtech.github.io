@@ -6,6 +6,20 @@
   <title>Supporters - crabamongspies</title>
   <link rel="icon" type="image/png" href="https://crabamongtech.github.io/favicon.png">
   <link rel="stylesheet" href="style.css" />
+  <style>
+    @keyframes rainbowShift {
+      0% {background-position:0% 50%}
+      50% {background-position:100% 50%}
+      100% {background-position:0% 50%}
+    }
+    .rb {
+      background-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: rainbowShift 5s linear infinite;
+    }
+  </style>
 </head>
 <body>
   <div class="centered">
@@ -29,59 +43,82 @@ Support a good cause "and my future in tech"
 > <a href="https://www.patreon.com/checkout/Crabamongspies?rid=25032520">JOIN</a>
   </div>
 
-  <script>
-    let supportersLines = [];
-    let hueOffset = 0;
+<script>
+const supportersDiv = document.getElementById("supportersContent");
 
-    function escapeHTML(text) {
-      return text.replace(/&/g, "&amp;")
-                 .replace(/</g, "&lt;")
-                 .replace(/>/g, "&gt;");
-    }
+const colorMap = { 
+  r:'red', o:'orange', y:'yellow', g:'green', b:'blue', p:'purple', v:'violet',
+  pk:'pink', c:'cyan', aq:'aqua', te:'teal', lg:'lime', lb:'lightblue', n:'navy',
+  m:'magenta', br:'brown', gy:'gray', dg:'darkgray', w:'white', bl:'black',
+  gd:'gold', s:'silver', cr:'crimson', ol:'olive', t:'tan', ch:'chocolate',
+  iv:'ivory', lv:'lavender', co:'coral', sa:'salmon', mr:'maroon', fo:'forestgreen',
+  sk:'skyblue'
+};
 
-    async function loadSupporters() {
-      try {
-        const url = "https://gist.githubusercontent.com/crabamongtech/73617cf0d3c7e9ea28b626c19f2d8db2/raw?t=" + Date.now();
-        const response = await fetch(url, { cache: "no-store" });
-        const supportersText = await response.text();
+function escapeHTML(text) {
+  return text.replace(/&/g, "&amp;")
+             .replace(/</g, "&lt;")
+             .replace(/>/g, "&gt;");
+}
 
-        supportersLines = supportersText.split('\n').map(line => escapeHTML(line));
-        animateRainbow();
-      } catch (err) {
-        document.getElementById("supportersContent").innerText = "Failed to load supporters.";
+function parseColors(text) {
+  const fragment = document.createDocumentFragment();
+  const lines = text.split('\n');
+
+  lines.forEach((line, idx) => {
+    let lastIndex = 0;
+    const regex = /\(([a-z]{1,3})\)%(.+?)%\(\1\)/gi;
+    let match;
+
+    while ((match = regex.exec(line)) !== null) {
+      if (match.index > lastIndex) {
+        fragment.appendChild(document.createTextNode(line.slice(lastIndex, match.index)));
       }
+
+      const span = document.createElement('span');
+      const code = match[1].toLowerCase();
+      const content = match[2];
+
+      if (code === 'rb') {
+        span.textContent = content;
+        span.className = 'rb';
+      } else {
+        span.style.color = colorMap[code] || 'white';
+        span.textContent = content;
+      }
+
+      fragment.appendChild(span);
+      lastIndex = regex.lastIndex;
     }
 
-    function animateRainbow() {
-      const container = document.getElementById("supportersContent");
-
-      const coloredLines = supportersLines.map((line, i) => {
-        const hue = (hueOffset + i * 30) % 360;
-        return `<span style="color: hsl(${hue}, 100%, 60%)">${line}</span>`;
-      });
-
-      container.innerHTML = coloredLines.join('\n');
-
-      const donate = document.getElementById("rainbow-donate");
-      const omega = document.getElementById("rainbow-omega");
-      const ultra = document.getElementById("rainbow-ultra");
-
-      if (donate) donate.style.color = `hsl(${(hueOffset + 0) % 360}, 100%, 60%)`;
-      if (omega) omega.style.color = `hsl(${(hueOffset + 120) % 360}, 100%, 60%)`;
-      if (ultra) ultra.style.color = `hsl(${(hueOffset + 240) % 360}, 100%, 60%)`;
-
-      hueOffset = (hueOffset + 1) % 360;
-      requestAnimationFrame(animateRainbow);
+    if (lastIndex < line.length) {
+      fragment.appendChild(document.createTextNode(line.slice(lastIndex)));
     }
 
-    window.onload = loadSupporters;
+    if (idx < lines.length - 1) fragment.appendChild(document.createElement('br'));
+  });
 
-    document.addEventListener("contextmenu", e => {
-      if (e.target.tagName === "IMG") e.preventDefault();
-    });
-    document.addEventListener("dragstart", e => {
-      if (e.target.tagName === "IMG") e.preventDefault();
-    });
-  </script>
+  return fragment;
+}
+
+async function loadSupporters() {
+  try {
+    const url = "https://gist.githubusercontent.com/crabamongtech/73617cf0d3c7e9ea28b626c19f2d8db2/raw?t=" + Date.now();
+    const response = await fetch(url, { cache: "no-store" });
+    const supportersText = await response.text();
+
+    supportersDiv.innerHTML = '';
+    supportersDiv.appendChild(parseColors(escapeHTML(supportersText)));
+  } catch (err) {
+    supportersDiv.textContent = "Failed to load supporters.";
+  }
+}
+
+window.onload = loadSupporters;
+
+// Prevent image drag & context menu
+document.addEventListener("contextmenu", e => { if (e.target.tagName === "IMG") e.preventDefault(); });
+document.addEventListener("dragstart", e => { if (e.target.tagName === "IMG") e.preventDefault(); });
+</script>
 </body>
 </html>

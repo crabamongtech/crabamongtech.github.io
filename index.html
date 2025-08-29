@@ -21,64 +21,93 @@ CRABAMONGSPIES
 ----------------------------
   </div>
 
-  <!-- Blog block -->
   <div class="centered" id="blog">if you are still seing this, your internet is slow</div>
 
-  <script>
-    const blogDiv = document.getElementById('blog');
+<script>
+const blogDiv = document.getElementById('blog');
 
-    const colorMap = { 
-      r:'red', g:'green', b:'blue', y:'yellow', 
-      c:'cyan', m:'magenta', w:'white', k:'black', 
-      o:'orange', p:'purple' 
-    };
+const colorMap = { 
+  r:'red', o:'orange', y:'yellow', g:'green', b:'blue', p:'purple', v:'violet',
+  pk:'pink', c:'cyan', aq:'aqua', te:'teal', lg:'lime', lb:'lightblue', n:'navy',
+  m:'magenta', br:'brown', gy:'gray', dg:'darkgray', w:'white', bl:'black',
+  gd:'gold', s:'silver', cr:'crimson', ol:'olive', t:'tan', ch:'chocolate',
+  iv:'ivory', lv:'lavender', co:'coral', sa:'salmon', mr:'maroon', fo:'forestgreen',
+  sk:'skyblue'
+};
 
-    function parseColors(text) {
-      const fragment = document.createDocumentFragment();
-      const lines = text.split('\n');
+function parseColors(text) {
+  const fragment = document.createDocumentFragment();
+  const lines = text.split('\n');
 
-      lines.forEach((line, idx) => {
-        let lastIndex = 0;
-        const regex = /([rgbymcwkop])%(.+?)%\1/gi;
-        let match;
+  lines.forEach((line, idx) => {
+    let lastIndex = 0;
+    const regex = /\(([a-z]{1,3})\)%(.+?)%\(\1\)/gi;
+    let match;
 
-        while ((match = regex.exec(line)) !== null) {
-          if (match.index > lastIndex) {
-            fragment.appendChild(document.createTextNode(line.slice(lastIndex, match.index)));
-          }
-          const span = document.createElement('span');
-          const color = colorMap[match[1].toLowerCase()] || 'white';
-          span.style.color = color;
-          span.textContent = match[2];
-          fragment.appendChild(span);
-          lastIndex = regex.lastIndex;
-        }
-
-        if (lastIndex < line.length) {
-          fragment.appendChild(document.createTextNode(line.slice(lastIndex)));
-        }
-
-        if (idx < lines.length - 1) fragment.appendChild(document.createElement('br'));
-      });
-
-      return fragment;
-    }
-
-    async function fetchLatestGist() {
-      try {
-        const url = `https://gist.githubusercontent.com/crabamongtech/f8b63c95e751b7d0c6014d0a186376df/raw?t=${Date.now()}`;
-        const response = await fetch(url, { cache: "no-store" });
-        const content = await response.text();
-        blogDiv.innerHTML = '';
-        blogDiv.appendChild(parseColors(content));
-      } catch (err) {
-        blogDiv.textContent = 'Error loading blog post: ' + err.message;
+    while ((match = regex.exec(line)) !== null) {
+      if (match.index > lastIndex) {
+        fragment.appendChild(document.createTextNode(line.slice(lastIndex, match.index)));
       }
+
+      const span = document.createElement('span');
+      const code = match[1].toLowerCase();
+      const content = match[2];
+
+      if (code === 'rb') {
+        span.textContent = content;
+        span.style.backgroundImage = 'linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet)';
+        span.style.backgroundClip = 'text';
+        span.style.color = 'transparent';
+        span.style.animation = 'rainbowShift 5s linear infinite';
+      } else {
+        span.style.color = colorMap[code] || 'white';
+        span.textContent = content;
+      }
+
+      fragment.appendChild(span);
+      lastIndex = regex.lastIndex;
     }
 
-    fetchLatestGist();
-    setInterval(fetchLatestGist, 5000);
-  </script>
+    if (lastIndex < line.length) {
+      fragment.appendChild(document.createTextNode(line.slice(lastIndex)));
+    }
+
+    if (idx < lines.length - 1) fragment.appendChild(document.createElement('br'));
+  });
+
+  return fragment;
+}
+
+const style = document.createElement('style');
+style.textContent = `
+@keyframes rainbowShift {
+  0% {background-position:0% 50%}
+  50% {background-position:100% 50%}
+  100% {background-position:0% 50%}
+}
+span[style*="animation"] {
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+`;
+document.head.appendChild(style);
+
+async function fetchLatestGist() {
+  try {
+    const url = `https://gist.githubusercontent.com/crabamongtech/f8b63c95e751b7d0c6014d0a186376df/raw?t=${Date.now()}`;
+    const response = await fetch(url, { cache: "no-store" });
+    const content = await response.text();
+    blogDiv.innerHTML = '';
+    blogDiv.appendChild(parseColors(content));
+  } catch (err) {
+    blogDiv.textContent = 'Error loading blog post: ' + err.message;
+  }
+}
+
+fetchLatestGist();
+setInterval(fetchLatestGist, 5000);
+</script>
 
 </body>
 </html>
