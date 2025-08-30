@@ -6,7 +6,7 @@ html, body {
   height: 100%;
   overflow: hidden; /* Prevent scrolling */
   background-color: #000;
-  color: #fff;
+  color: #eeeeee;
   font-family: monospace;
   display: flex;
   flex-direction: column; /* Stack blocks vertically */
