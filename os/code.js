@@ -43,6 +43,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const runTerminalSequence = async () => {
         toggleCursor(true);
+
+        // --- Add LOGO at top ---
+        const logo = document.createElement('img');
+        logo.src = "https://raw.githubusercontent.com/crabamongtech/CrabOS/refs/heads/main/logo.png";
+        logo.className = "repo-logo";
+        outputArea.appendChild(logo);
+
         await printLine('[INFO] Fetching repository data from GitHub...');
 
         let repo;
@@ -60,27 +67,27 @@ document.addEventListener('DOMContentLoaded', () => {
         
         toggleCursor(false);
 
-        // Print Core Info
+        // Core Info
         await printLine(`NAME: <span class="success">${repo.name}</span>`);
         await printLine(`DESC: <span class="detail">${repo.description || 'No description provided.'}</span>`);
         await printLine(`URL: <span class="detail">${repo.html_url}</span>`);
         await printLine('');
 
-        // Print Stats
+        // Stats
         await printLine('[STAT] Metrics:');
         await printLine(`\tSTARS: <span class="value">${repo.stargazers_count}</span>`);
         await printLine(`\tFORKS: <span class="value">${repo.forks_count}</span>`);
         await printLine(`\tISSUES: <span class="value">${repo.open_issues_count}</span>`);
         await printLine('');
 
-        // Print Details
+        // Details
         await printLine('[INFO] Details:');
         await printLine(`\tSIZE: <span class="value">${(repo.size / 1024).toFixed(2)} MB</span>`);
         await printLine(`\tLICENSE: <span class="value">${repo.license?.spdx_id || repo.license?.name || 'N/A'}</span>`);
         await printLine(`\tUPDATED: <span class="value">${new Date(repo.updated_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</span>`);
         await printLine('');
         
-        // Print Download Link (Customized)
+        // Download link
         const downloadUrl = `${repo.html_url}/archive/refs/heads/${repo.default_branch}.zip`;
         const downloadLine = `<span class="success">[ACTION] Download:</span> <a href="${downloadUrl}" target="_blank" class="rainbow-link">DOWNLOAD HERE</a>`;
         await printLine(downloadLine);
