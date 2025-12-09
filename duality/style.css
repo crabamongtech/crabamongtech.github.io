@@ -1,0 +1,112 @@
+@font-face { font-family:'EBFont'; src:url('eb.ttf') format('truetype'); }
+
+html, body { 
+  margin:0; 
+  font-family:'EBFont',sans-serif; 
+  background:#3E4637; 
+  color:#cfcfcf; 
+  font-size:2rem; 
+  letter-spacing:.05em; 
+  min-height:100vh; 
+  user-select:none; 
+}
+
+img { 
+  user-drag:none; 
+  -webkit-user-drag:none; 
+  pointer-events:auto; 
+}
+
+.container { 
+  max-width:1400px; 
+  margin:auto; 
+  display:flex; 
+  gap:30px;        /* slightly smaller */
+  padding:30px 20px; 
+  flex-wrap:wrap; 
+  position:relative; 
+  z-index:1; 
+}
+
+.content { 
+  flex:1 1 800px; 
+  display:flex; 
+  flex-direction:column; 
+  gap:25px;       /* slightly smaller */
+}
+
+.game-title, .game-meta, .section-title { 
+  color:#e4e4e4; 
+  letter-spacing:.05em; 
+}
+
+.game-title { 
+  font-size:32px; 
+  font-weight:700; 
+  margin-bottom:10px; 
+  text-shadow:0 2px 4px rgba(0,0,0,.7); 
+}
+
+.game-meta, .game-description p { 
+  font-size:32px; 
+  margin-bottom:20px; 
+  line-height:1.6; 
+}
+
+.media-gallery { 
+  display:flex; 
+  gap:15px;     /* slightly smaller */
+  flex-wrap:wrap; 
+}
+
+.media-gallery img, .game-image, .screenshot { 
+  width:100%; 
+  border-radius:8px; 
+  box-shadow:0 4px 12px rgba(0,0,0,.7); 
+  background:#4C5844; 
+  flex:1 1 calc(50% - 7.5px); 
+}
+
+.sidebar { 
+  flex:0 0 350px; 
+  display:flex; 
+  flex-direction:column; 
+  gap:25px;   /* slightly smaller */
+  height:fit-content; 
+}
+
+.rounded-box { 
+  border-radius:6px; 
+  background:#4C5844; 
+  padding:20px; 
+  box-shadow:inset 0 1px 2px rgba(0,0,0,.5); 
+}
+
+.rounded-box h3 { 
+  margin-top:0; 
+  color:#e4e4e4; 
+  font-size:24px; 
+}
+
+.rounded-box p { 
+  margin:10px 0; 
+  font-size:24px; 
+  color:#cfcfcf; 
+}
+
+@media(max-width:1200px){ 
+  .container{flex-direction:column;align-items:center;} 
+  .sidebar,.content{width:100%;max-width:none;} 
+  .media-gallery img{flex:1 1 100%;} 
+}
+
+.bottom-image { 
+  position:fixed; 
+  bottom:0; 
+  left:0; 
+  width:100%; 
+  height:150px; 
+  background:url('lg.png') repeat-x bottom left / auto 100%; 
+  pointer-events:none; 
+  z-index:0; 
+}

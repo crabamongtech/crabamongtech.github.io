@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const REPO = 'crabamongtech/WNVIO';
+    const REPO = 'crabamongtech/CrabOS';
     const API_URL = `https://api.github.com/repos/${REPO}`;
     const outputArea = document.getElementById('output-area');
     const DELAY = 50;
